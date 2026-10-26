@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+    <title>Profile restaurant</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <header>
+    <nav>
+    <div class="logo-title">
+      <img src="img/logoblanco.png" alt="logo Philly Tacos ">
+      <h3 class="title">Philly<span class="title title-second"> Tacos</span></h3>
+    </div>
+    <div>
+      <a href="/logout" class="btn btn-xl btn-nav">Logout</a>
+    <div>
+     </nav>
+  </header>
+  
+  <section class="container">
+
+    <section class="row">
+        <!-- LOCAL INFORMATION -->
+        <section class="col-sm-6">
+            <section class="well container-info">
+                <h3><span class="fa fa-user"></span> Welcome!</h3>
+                <h2>
+                <strong><%= user.name %></strong>
+                </h2>
+                <% if (user.local.email) { %>
+                    <p>
+                        <strong>id</strong>: <%= user._id %><br>
+                        <strong>email</strong>: <%= user.local.email %><br>
+                    </p>
+
+                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                <% } else { %>
+                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                <% } %>
+            </section>
+        </section>
+        <section class="col-sm-6">
+          <ul class="messages">
+          <% for(var i=0; i<messages.length; i++) {%>
+            <li class="message">
+              <span data-message-id="<%= messages[i]._id %>"><%= messages[i].name %></span>
+              <span><%= messages[i].msg %></span>
+              <span><%= messages[i].thumbUp %></span>
+              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
+              <span><i class="fa fa-trash-o fa-lg"></i></span>
+            </li>
+          <% } %>
+          </ul>
+          <h3>Add a Menu</h3>
+        <% if (user.local.email) { %>
+          <form action="/menu" method="POST" class="formulario">
+            <input type="text" value="<%= user.local.email %>" name="name"  disabled class="input-menu">
+            <select name="category" id="pet-type" class="input-menu">
+                  <option value="">Please choose an option</option>
+                  <option value="Tacos">Tacos</option>
+                  <option value="Quesadillas">Quesadillas</option>
+                  <option value="Appetizers">Appetizers</option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                  <option value="Desserts">Desserts</option>
+            </select>
+            <input type="text" placeholder="Tacos" name="title" class="input-menu">
+            <input type="text" placeholder="Description" name="description" class="input-menu">
+            <input type="text" placeholder="15" name="price" class="input-menu">
+            <button type="submit" class="btn-primary">Add a menu</button>
+          </form>
+        </section>
+        <% } %>
+     
+    </section>
+    <section class="table-wrapper">
+      <table>
+          <tr class="table-headings">
+            <th>Category</th>
+            <th>Title</th>
+            <th>Dscription</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+          <% if (menu.length === 0) { %>
+          <tr class="table-body">
+            <td>There is no menu right now =(</td>
+            <% }else{ %>
+            <% menu.forEach(item => { %>   
+            <tr> 
+            <td><%= item.category %></td>
+            <td><%= item.title %></td>
+            <td><%= item.description %></td>
+            <td><%= item.price %></td>
+            <td>
+                <button type="button" class="btn btn-warning btn-m btn-edit" data-id="<%= item._id %>"><span class="fa fa-plus"></span> Edit</button>
+                <button type="button" class="btn btn-danger btn-m btn-delete" data-id="<%= item._id %>"><span class="fa fa-plus"></span> Delete</button>
+                </td>
+          </tr>
+          <% }) %>
+          <% } %>
+      </table>    
+    </section>
+    <dialog id="dialog-edit-menu">
+      <h3>Update Menu</h3>
+      <form method="dialog" id="form-edit-menu">
+        <input type="hidden" name="itemId">
+        <select name="category" id="pet-type" class="input-menu">
+          <option value="">Please choose an option</option>
+          <option value="Tacos">Tacos</option>
+          <option value="Quesadillas">Quesadillas</option>
+          <option value="Appetizers">Appetizers</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Desserts">Desserts</option>
+        </select>
+        <input type="text" placeholder="Tacos" name="title" class="input-menu">
+        <input type="text" placeholder="Description" name="description" class="input-menu">
+        <input type="text" placeholder="15" name="price" class="input-menu">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-danger" id="edit-cancel">Cancel</button>
+      </form>
+  </dialog>
+</section>
+<script src="main.js"></script>
+
+</body>
+</html>
