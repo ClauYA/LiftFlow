@@ -104,7 +104,7 @@ const Menu = require('./models/menu')
         // SIGNUP =================================
         // show the signup form
         app.get('/signup', function(req, res) {
-            res.render('signup.ejs', { message: req.flash('signupMessage') });
+           res.render('signup.ejs', { message: req.flash('signupMessage') });
         });
 
         // process the signup form
@@ -113,7 +113,7 @@ const Menu = require('./models/menu')
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
-
+       
 // =============================================================================
 // UNLINK ACCOUNTS =============================================================
 // =============================================================================
