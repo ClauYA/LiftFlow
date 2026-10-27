@@ -16,17 +16,18 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const session      = require('express-session');
-const menuController = require('./app/controllers/menuController.js');
+//const menuController = require('./app/controllers/menuController.js');
 
 
-const Restaurantdb = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}/liftflowdb`;
+const liftflowdb = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}/liftflowdb`;
 
 // configuration ===============================================================
-mongoose.connect(Restaurantdb, {
+mongoose.connect(liftflowdb, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err)=>{
-  if (err) {return console.log(err);}
+  if (err) {
+    return console.log(err.message);}
   console.log('Conectando a db liftflow ^^');
   const db = mongoose.connection.db;
   require('./app/routes.js')(app, passport, db, ObjectID);
@@ -54,8 +55,8 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-app.get('/', menuController.getAllPlatillos);
-app.use('/menu', require('./app/Routes/menuRoutes.js'));
+//app.get('/', menuController.getAllPlatillos);
+//app.use('/menu', require('./app/Routes/menuRoutes.js'));
 
 // launch ======================================================================
 app.listen(port);

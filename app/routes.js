@@ -1,6 +1,6 @@
 
 module.exports = function(app, passport, db, ObjectID) {
-  const Menu = require('./models/menu');
+  //const Menu = require('./models/menu');
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -11,13 +11,13 @@ module.exports = function(app, passport, db, ObjectID) {
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, async function(req, res) {
     try {
-      const menu = await Menu.find();
+      //const menu = await Menu.find();
       db.collection('messages').find().toArray((err, result) => {
         if (err) {return console.log(err);}
         res.render('profile.ejs', {
           user: req.user,
           messages: result,
-          menu
+          //menu
         });
       });
     } catch (err) {
