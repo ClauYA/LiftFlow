@@ -4,8 +4,9 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
-},
+  },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "bcrypt": "*",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.13.0",
-    "globals": "^17.13.0"
+    "globals": "^17.13.0",
+    "tailwindcss": "^4.3.3"
   }
 }
