@@ -1,47 +1,38 @@
+console.log('main.js loaded');
+document.addEventListener('submit', async (e) => {
+  const form = e.target.closest('form[data-section]');
+  if (!form) {return; }                // ignora otros formularios
+  e.preventDefault();                // evita recargar la página
+  console.log('submit caught:', form.dataset.section);
 
-const btnDelete = document.getElementsByClassName('btn-delete');
-const btnEdit = document.getElementsByClassName('btn-edit');
-const cuadroDeDialogo =  document.getElementById('dialog-edit-menu');
-const formEditMenu = document.getElementById('form-edit-menu');
+  form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
 
-
-
-//editar en cuadro de dialogo
-Array.from(btnEdit).forEach(function(element) {
-  element.addEventListener('click', function () {
-    const objeto =element.closest('tr').children;
-    formEditMenu.firstElementChild.value = element.dataset.id;
-    formEditMenu.category.value = objeto[0].textContent;
-    formEditMenu.title.value = objeto[1].textContent;
-    formEditMenu.description.value = objeto[2].textContent;
-    formEditMenu.price.value = objeto[3].textContent.replace('$', '');
-    cuadroDeDialogo.showModal();
+  const res = await fetch(`/athlete/${form.dataset.section}`, {
+    method: 'POST',
+    body: new URLSearchParams(new FormData(form))
   });
-});
+  const data = await res.json();
+  console.log('server answered:', res.status, data);
 
-//este es mi boton para la cancelacion del update en el cuadro de dialogo
-document.getElementById('edit-cancel').addEventListener('click', () => dialog.close());
+  if (!res.ok) {
+    for (const [field, msg] of Object.entries(data.errors || {})) {
+      const el = form.querySelector(`[data-error-for="${field}"]`);
+      if (el) {el.textContent = msg;}
+    }
+    return;
+  }
 
-formEditMenu.addEventListener('submit', async function (e) {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(formEditMenu));
-  const id = data.itemId;
-  delete data.itemId;
-  data.price = Number(data.price);
-
-  try {
-    const respuesta = await fetch(`/menu/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    if (!respuesta.ok) {throw new Error('Couldn\'t update');}
-    window.location.reload();
-  } catch (err) {
-    console.error(err.message);
-    alert(err.message);
+  const nextTab = document.querySelector(`#tab-${data.next}`);
+  if (nextTab) {
+    nextTab.disabled = false;
+    nextTab.click();
   }
 });
+
+/*const btnDelete = document.getElementsByClassName('btn-delete');
+
+
+
 
 
 
@@ -59,4 +50,4 @@ Array.from(btnDelete).forEach(function(element) {
           
     }
   });
-});
+});*/

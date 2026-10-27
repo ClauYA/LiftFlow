@@ -1,6 +1,6 @@
 
 module.exports = function(app, passport, db, ObjectID) {
-  //const Menu = require('./models/menu');
+  const Athlete = require('./models/athlete');
   // normal routes ===============================================================
 
   // show the home page (will also have our login links)
@@ -33,55 +33,33 @@ module.exports = function(app, passport, db, ObjectID) {
     res.redirect('/');
   });
 
-  // message board routes ===============================================================
+  // Agregamos al atleta la cong de cuenta ===============================================================
+  app.post('/athlete/account', isLoggedIn, async (req, res) => {
+    try {
+      const athlete = await Athlete.findOne({ user: req.user._id })
+                      || new Athlete({ user: req.user._id });
 
-  app.post('/messages', (req, res) => {
-    db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, err => {
-      if (err) {return console.log(err);}
-      console.log('saved to database');
-      res.redirect('/profile');
-    });
-  });
+      athlete.account = {
+        role: req.body.role,
+        language: req.body.language,
+        unitSystem: req.body.unitSystem
+      };
+      await athlete.save();
 
-  app.put('/likes', (req, res) => {
-    db.collection('messages')
-      .findOneAndUpdate({_id: new ObjectID(req.body.messageID)}, {
-        $set: {
-          
-          thumbUp:req.body.thumbUp + 1
+      res.json({ ok: true, next: 'discipline' });
+    } catch (err) {
+      if (err.name === 'ValidationError') {
+        const errors = {};
+        for (const [path, e] of Object.entries(err.errors)) {
+          errors[path.split('.').pop()] = e.message;
         }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) {return res.send(err);}
-        res.send(result);
-      });
+        return res.status(400).json({ errors });
+      }
+      res.status(500).json({ error: err.message });
+    }
   });
-
-  app.put('/dislikes', (req, res) => {
-    console.log(req.body);
-    db.collection('messages')
-      .findOneAndUpdate({_id: new ObjectID(req.body.messageID)}, {
-        
-        $set: {
-          thumbUp:req.body.thumbUp - 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) {return res.send(err);}
-        res.send(result);
-      });
-  });
-
-  app.delete('/messages', (req, res) => {
-    db.collection('messages').findOneAndDelete({_id: new ObjectID(req.body.messageID)}, err => {
-      if (err) {return res.send(500, err);}
-      res.send('Message deleted!');
-    });
-  });
+ 
+ 
 
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================

@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile Athlete</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-  <link rel="stylesheet" href="font-awesome.min.css">
   <link rel="stylesheet" href="profile.css">
 </head>
 <body>
@@ -64,22 +63,22 @@
       <section class="container-tabs">
         <ul class="nav nav-pills" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="tab" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account and Profile</button>
+            <button class="nav-link active" id="tab-account" data-bs-toggle="tab" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account and Profile</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Discipline and Experience</button>
+            <button class="nav-link" id="tab-discipline" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Discipline and Experience</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Goals</button>
+            <button class="nav-link" id="tab-goals" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Goals</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Availability and environment</button>
+            <button class="nav-link" id="tab-availability-environment" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Availability and environment</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Starting point</button>
+            <button class="nav-link" id="tab-starting-point" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Starting point</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Nutrition</button>
+            <button class="nav-link" id="tab-nutrition" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Nutrition</button>
           </li>
         </ul>
 
@@ -89,31 +88,38 @@
           <div class="tab-pane show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
             <div class="welcome-layout">
               <!-- Form (information this one for height / weight) -->
-              <div class="form-wrapper">
+              <div class="tab-pane show active" id="pane-account" role="tabpanel" aria-labelledby="tab-account" tabindex="0">
                 <h3>Let's get started</h3>
                 <% if (user.local.email) { %>
-                  <form action="/menu" method="POST" class="formulario">
-                    <input type="text" value="<%= user.local.email %>" name="name" disabled class="input-menu">
-                    <label>How are you going to use LiftFlow?</label>
-                    <select name="role" id="category-add" class="input-menu">
+                 <form class="formulario" data-section="account">
+                    <input type="text" value="<%= user.local.email %>" disabled class="input-menu">
+
+                    <label for="role">How are you going to use LiftFlow?</label>
+                    <select name="role" id="role" class="input-menu" required>
                       <option value="">Please choose an option</option>
-                      <option value="Athelte">Athlete</option>
+                      <option value="Athlete">Athlete</option>
                       <option value="Coach">Coach</option>
                       <option value="Both">Both</option>
                     </select>
-                     <label>Language</label>
-                    <select name="role" id="category-add" class="input-menu">
+                    <small class="field-error" data-error-for="role"></small>
+
+                    <label for="language">Language</label>
+                    <select name="language" id="language" class="input-menu" required>
                       <option value="">Please choose an option</option>
-                      <option value="Athelte">English</option>
-                      <option value="Coach">Spanish</option>
+                      <option value="English">English</option>
+                      <option value="Spanish">Spanish</option>
                     </select>
-                    <label>Unit System</label>
-                    <select name="role" id="category-add" class="input-menu">
+                    <small class="field-error" data-error-for="language"></small>
+
+                    <label for="unitSystem">Unit System</label>
+                    <select name="unitSystem" id="unitSystem" class="input-menu" required>
                       <option value="">Please choose an option</option>
-                      <option value="Athelte">Metric</option>
-                      <option value="Coach">Imperial</option>
+                      <option value="Metric">Metric</option>
+                      <option value="Imperial">Imperial</option>
                     </select>
-                    <button type="submit" class="btn-primary">Save</button>
+                    <small class="field-error" data-error-for="unitSystem"></small>
+
+                    <button type="submit" class="btn-primary">Save and continue</button>
                   </form>
                 <% } %>
               </div>
