@@ -1,154 +1,162 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <title>Profile restaurant</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-    <link rel="stylesheet" href="font-awesome.min.css">
-    <link rel="stylesheet" href="profile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile Athlete</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+  <link rel="stylesheet" href="font-awesome.min.css">
+  <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+
+  <!-- ========== HEADER / NAV (drawer) ========== -->
   <header>
     <nav class="navbar bg-1 fg-2">
       <div class="container-fluid">
         <div class="logo-title">
-          <img class="img-logo" src="img/liftflow.png" alt="logo litflow">                    
+          <img class="img-logo" src="img/liftflow.png" alt="Liftflow logo">
         </div>
+
         <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon" aria-hidden="true"></span>
         </button>
+
         <dialog class="drawer drawer-end" tabindex="-1" id="navbarTogglerDemo02" aria-labelledby="navbarTogglerDemo02Label">
           <div class="drawer-header">
             <h5 class="drawer-title" id="navbarTogglerDemo02Label">Dashboard</h5>
             <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close"></button>
           </div>
           <div class="drawer-body">
+            <span class="badge badge-subtle theme-accent">Athlete Space</span>
             <ul class="navbar-nav me-auto mb-2">
-              <span class="badge badge-subtle theme-accent">Athlete Space</span>
               <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Workouts</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Nutrition</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Check-ins</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Progress</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Messages</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Coach hub</a></li>
-              <li><a href="/logout" class="btn btn-xl btn-nav">Logout</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-              <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Workouts</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Nutrition</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Check-ins</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Progress</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Coach hub</a></li>
+              <li class="nav-item"><a href="/logout" class="btn btn-xl btn-nav">Logout</a></li>
             </ul>
           </div>
         </dialog>
       </div>
     </nav>
   </header>
-  
-  <section class="container">
 
-    <section class="row">
-        <!-- LOCAL INFORMATION -->
-        <section class="col-sm-6">
-            <section class="well container-info">
-                <h3><span class="fa fa-user"></span> Welcome!</h3>
-                <h2>
-                <strong><%= user.name %></strong>
-                </h2>
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-            </section>
-        </section>
-        <section class="col-sm-6">
-          <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span data-message-id="<%= messages[i]._id %>"><%= messages[i].name %></span>
-              <span><%= messages[i].msg %></span>
-              <span><%= messages[i].thumbUp %></span>
-              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-              <span><i class="fa fa-trash-o fa-lg"></i></span>
-            </li>
-          <% } %>
-          </ul>
-          <h3>Add a Menu</h3>
-        <% if (user.local.email) { %>
-          <form action="/menu" method="POST" class="formulario">
-            <input type="text" value="<%= user.local.email %>" name="name"  disabled class="input-menu">
-            <select name="category" id="pet-type" class="input-menu">
-                  <option value="">Please choose an option</option>
-                  <option value="Tacos">Tacos</option>
-                  <option value="Quesadillas">Quesadillas</option>
-                  <option value="Appetizers">Appetizers</option>
-                  <option value="Lunch">Lunch</option>
-                  <option value="Dinner">Dinner</option>
-                  <option value="Desserts">Desserts</option>
-            </select>
-            <input type="text" placeholder="Tacos" name="title" class="input-menu">
-            <input type="text" placeholder="Description" name="description" class="input-menu">
-            <input type="text" placeholder="15" name="price" class="input-menu">
-            <button type="submit" class="btn-primary">Add a menu</button>
-          </form>
-        </section>
-        <% } %>
-     
+  <main class="container">  
+    <!-- Welcome / account info -->
+    <section class="welcome-card container-info">
+      <h3><span class="fa fa-user"></span> Welcome!</h3>
+      <h2><strong><%= user.name || user.local.email %></strong></h2>
+      <% if (user.local.email) { %>
+      <p>
+        <strong>email</strong>: <%= user.local.email %>
+      </p>
+      <a href="/unlink/local" class="btn btn-default">Unlink</a>
+        <% } else { %>
+      <a href="/connect/local" class="btn btn-default">Connect Local</a>
+      <% } %>
     </section>
-    <section class="table-wrapper">
-      <table>
+   <section class="container-principal"> 
+      <!-- ========== TABS (horizontal nav) ========== -->
+      <section class="container-tabs">
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="tab" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account and Profile</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Discipline and Experience</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Goals</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Availability and environment</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Starting point</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Nutrition</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+
+          <!-- HOME: welcome + form side by side -->
+          <div class="tab-pane show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+            <div class="welcome-layout">
+              <!-- Form (information this one for height / weight) -->
+              <div class="form-wrapper">
+                <h3>Let's get started</h3>
+                <% if (user.local.email) { %>
+                  <form action="/menu" method="POST" class="formulario">
+                    <input type="text" value="<%= user.local.email %>" name="name" disabled class="input-menu">
+                    <label>How are you going to use LiftFlow?</label>
+                    <select name="role" id="category-add" class="input-menu">
+                      <option value="">Please choose an option</option>
+                      <option value="Athelte">Athlete</option>
+                      <option value="Coach">Coach</option>
+                      <option value="Both">Both</option>
+                    </select>
+                     <label>Language</label>
+                    <select name="role" id="category-add" class="input-menu">
+                      <option value="">Please choose an option</option>
+                      <option value="Athelte">English</option>
+                      <option value="Coach">Spanish</option>
+                    </select>
+                    <label>Unit System</label>
+                    <select name="role" id="category-add" class="input-menu">
+                      <option value="">Please choose an option</option>
+                      <option value="Athelte">Metric</option>
+                      <option value="Coach">Imperial</option>
+                    </select>
+                    <button type="submit" class="btn-primary">Save</button>
+                  </form>
+                <% } %>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- PROFILE -->
+          <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+            <p>This is some placeholder content the <strong>Profile tab’s</strong> associated content.</p>
+          </div>
+
+          <!-- CONTACT -->
+          <div class="tab-pane" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+            <p>This is some placeholder content the <strong>Contact tab’s</strong> associated content.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========== MENU TABLE ========== -->
+      <section class="table-wrapper">
+        <table>
           <tr class="table-headings">
             <th>Category</th>
             <th>Title</th>
-            <th>Dscription</th>
+            <th>Description</th>
             <th>Price</th>
             <th>Actions</th>
           </tr>
-          <% if (menu.length === 0) { %>
-          <tr class="table-body">
-            <td>There is no menu right now =(</td>
-            <% }else{ %>
-            <% menu.forEach(item => { %>   
-            <tr> 
-            <td><%= item.category %></td>
-            <td><%= item.title %></td>
-            <td><%= item.description %></td>
-            <td><%= item.price %></td>
-            <td>
-                <button type="button" class="btn btn-warning btn-m btn-edit" data-id="<%= item._id %>"><span class="fa fa-plus"></span> Edit</button>
-                <button type="button" class="btn btn-danger btn-m btn-delete" data-id="<%= item._id %>"><span class="fa fa-plus"></span> Delete</button>
-                </td>
-          </tr>
-          <% }) %>
-          <% } %>
-      </table>    
-    </section>
-    <dialog id="dialog-edit-menu">
-      <h3>Update Menu</h3>
-      <form method="dialog" id="form-edit-menu">
-        <input type="hidden" name="itemId">
-        <select name="category" id="pet-type" class="input-menu">
-          <option value="">Please choose an option</option>
-          <option value="Tacos">Tacos</option>
-          <option value="Quesadillas">Quesadillas</option>
-          <option value="Appetizers">Appetizers</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Desserts">Desserts</option>
-        </select>
-        <input type="text" placeholder="Tacos" name="title" class="input-menu">
-        <input type="text" placeholder="Description" name="description" class="input-menu">
-        <input type="text" placeholder="15" name="price" class="input-menu">
-        <button type="submit" class="btn btn-success">Save</button>
-        <button type="button" class="btn btn-danger" id="edit-cancel">Cancel</button>
-      </form>
-  </dialog>
-</section>
-<script src="main.js"></script>
+            <tr class="table-body">
+              <td colspan="5">There is no info right now =(</td>
+            </tr>
+          
+        </table>
+      </section>
 
+      
+    <section>
+  </main>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
 </body>
 </html>

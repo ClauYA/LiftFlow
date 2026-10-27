@@ -68,7 +68,7 @@ nav{
   align-self: stretch;
 }
 .btn-nav:hover{
-  color: #2D8087;
+  color: var(--brand-600);
 }
 .logo-title{
   display: flex;
@@ -211,6 +211,10 @@ h1{
 .container-btn-signup{
   margin-top: 8px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.row{
   display: flex;
   justify-content: center;
 }

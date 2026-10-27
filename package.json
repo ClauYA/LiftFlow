@@ -1,6 +1,10 @@
 {
   "name": "node-authentication",
   "main": "server.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+},
   "dependencies": {
     "bcrypt": "*",
     "bcrypt-nodejs": "^0.0.3",
@@ -22,5 +26,10 @@
     "passport-google-oauth": "~1.0.0",
     "passport-local": "~1.0.0",
     "passport-twitter": "^0.1.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0"
   }
 }

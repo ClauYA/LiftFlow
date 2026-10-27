@@ -6,7 +6,7 @@ const express  = require('express');
 const app      = express();
 const port     = process.env.PORT || 8080;
 //desetructuracion
-const { ObjectID } = require('mongodb')
+const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
 //library and open source
 const passport = require('passport');
@@ -16,8 +16,8 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const session      = require('express-session');
-const menuController = require('./app/controllers/menuController.js')
-//var configDB = require('./config/database.js');
+const menuController = require('./app/controllers/menuController.js');
+
 
 const Restaurantdb = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}/liftflowdb`;
 
@@ -25,10 +25,10 @@ const Restaurantdb = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB
 mongoose.connect(Restaurantdb, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}, (err, database)=>{
-  if (err) return console.log(err)
-    console.log('Conectando a db liftflow ^^')
-  const db = mongoose.connection.db
+}, (err)=>{
+  if (err) {return console.log(err);}
+  console.log('Conectando a db liftflow ^^');
+  const db = mongoose.connection.db;
   require('./app/routes.js')(app, passport, db, ObjectID);
 
 }); // connect to our database
@@ -40,15 +40,15 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'rcbootcamp2021b', // session secret
-    resave: true,
-    saveUninitialized: true
+  secret: 'rcbootcamp2021b', // session secret
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
