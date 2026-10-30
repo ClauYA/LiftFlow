@@ -4,64 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile Athlete</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="profile.css">
 </head>
 <body>
+  <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
+  <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4">
+    <div class="flex items-center gap-3">
+      <label for="sidebar-toggle" class="cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100 lg:hidden" aria-label="Open menu">
+        <span class="fa-solid fa-bars"></span>
+      </label>
+      <a href="/" class="logo-title items-center">
+       <img class="img-logo h-16 w-auto" src="img/liftflow.png" alt="litflow logo">                    
+      </a>
+    </div>
 
-  <!-- ========== HEADER / NAV (drawer) ========== -->
-  <header>
-    <nav class="navbar bg-1 fg-2">
-      <div class="container-fluid">
-        <div class="logo-title">
-          <img class="img-logo" src="img/liftflow.png" alt="Liftflow logo">
+    <div class="hidden items-center gap-4 lg:flex">
+      <span class="text-sm text-gray-500">Welcome! <span class="font-semibold text-gray-900"><%= user.name %></span></span>
+      <a href="/logout" class="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Logout</a>
+    </div>
+     <!--mobile-->
+      <input type="checkbox" id="menu-toggle" class="peer sr-only">
+      <label for="menu-toggle" class="lg:hidden cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500" aria-label="Toggle menu">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </label>
+
+      <!-- Menú móvil: se muestra cuando el checkbox está marcado -->
+      <div class="hidden peer-checked:flex md:hidden absolute left-0 right-0 top-full flex-col border-t border-gray-200 bg-white p-2 shadow-md">
+        <h2>Welcome!<strong><%= user.name %></strong></h2>
+        <a href="/profile" class="block rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100">Profile</a>
+      </div>
+  </header>
+  <main class="container">  
+    <div class="min-h-screen lg:flex">
+      <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
+
+       <%- include('sidebar', { name: user.name }) %>
+
+      <!-- Fondo oscuro: toca para cerrar (solo móvil) -->
+     <label for="sidebar-toggle" class="fixed inset-x-0 bottom-0 top-16 z-20 hidden bg-black/40 peer-checked:block lg:hidden"></label>
+
+      <div class="flex-1">
+        <!-- Barra superior móvil -->
+        <div class="flex items-center border-b border-gray-200 p-3 lg:hidden">
+          <label for="sidebar-toggle" class="cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100" aria-label="Open menu">
+            <span class="fa-solid fa-bars"></span>
+          </label>
         </div>
 
-        <button class="btn-icon navbar-toggler" type="button" data-bs-toggle="drawer" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon" aria-hidden="true"></span>
-        </button>
-
-        <dialog class="drawer drawer-end" tabindex="-1" id="navbarTogglerDemo02" aria-labelledby="navbarTogglerDemo02Label">
-          <div class="drawer-header">
-            <h5 class="drawer-title" id="navbarTogglerDemo02Label">Dashboard</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Close"></button>
-          </div>
-          <div class="drawer-body">
-            <span class="badge badge-subtle theme-accent">Athlete Space</span>
-            <ul class="navbar-nav me-auto mb-2">
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Workouts</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Nutrition</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Check-ins</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Progress</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Coach hub</a></li>
-              <li class="nav-item"><a href="/logout" class="btn btn-xl btn-nav">Logout</a></li>
-            </ul>
-          </div>
-        </dialog>
+        <main class="p-6">
+          <!-- contenido de la página -->
+        </main>
       </div>
-    </nav>
-  </header>
-
-  <main class="container">  
-    <!-- Welcome / account info -->
-    <section class="welcome-card container-info">
-      <h3><span class="fa fa-user"></span> Welcome!</h3>
-      <h2><strong><%= user.name || user.local.email %></strong></h2>
-      <% if (user.local.email) { %>
-      <p>
-        <strong>email</strong>: <%= user.local.email %>
-      </p>
-      <a href="/unlink/local" class="btn btn-default">Unlink</a>
-        <% } else { %>
-      <a href="/connect/local" class="btn btn-default">Connect Local</a>
-      <% } %>
-    </section>
+    </div>
+    
    <section class="container-principal"> 
+
+    <nav class="border-b border-gray-200 bg-white">
+  <div class="mx-auto flex max-w-6xl items-center gap-1 px-4">
+    <!-- Pestaña activa (sin desplegable) -->
+    <a href="/guides" aria-current="page"
+       class="-mb-px flex items-center gap-2 border-b-2 border-violet-900 px-3 py-3 text-sm font-semibold text-gray-900">
+      <span class="fa-regular fa-file-lines"></span> Guides
+    </a>
+
+    <!-- Pestaña con desplegable -->
+    <div class="group relative">
+      <button type="button"
+              class="-mb-px flex items-center gap-2 border-b-2 border-transparent px-3 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 group-hover:text-gray-900 group-focus-within:text-gray-900">
+        <span class="fa-solid fa-wrench"></span>
+        Libraries and tools
+        <span class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"></span>
+      </button>
+
+      <!-- Menú: aparece con hover o con foco de teclado -->
+      <div class="invisible absolute left-0 top-full z-20 w-56 pt-1 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <div class="rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
+          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">API clients</a>
+          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">CLI</a>
+          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Wizard</a>
+          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Crawler</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otra pestaña con desplegable: copia el bloque anterior -->
+    <a href="/api" class="-mb-px flex items-center gap-2 border-b-2 border-transparent px-3 py-3 text-sm font-medium text-gray-700 hover:text-gray-900">
+      <span class="fa-solid fa-code"></span> API reference
+    </a>
+  </div>
+</nav>
       <!-- ========== TABS (horizontal nav) ========== -->
-      <section class="container-tabs">
-        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <nav class="border-b border-gray-200 bg-white">
+        <ul class="mx-auto flex max-w-6xl items-center gap-1 px-4" id="pills-tab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="tab-account" data-bs-toggle="tab" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account and Profile</button>
           </li>
@@ -138,7 +175,7 @@
           </div>
 
         </div>
-      </section>
+      </nav>
 
       <!-- ========== MENU TABLE ========== -->
       <section class="table-wrapper">

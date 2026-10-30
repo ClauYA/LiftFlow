@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile Athlete</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="profile.css">
+    </head>
+    <body>  
+        
+        <%
+        const items = [
+        { href: '/dashboard', label: 'Dashboard',    icon: 'fa-gauge' },
+        { href: '/workouts',  label: 'Workouts',     icon: 'fa-dumbbell' },
+        { href: '/plans',     label: 'Plans',        icon: 'fa-clipboard-list' },
+        { href: '/progress',  label: 'Progress',     icon: 'fa-chart-line' },
+        { href: '/exercises', label: 'Exercises',    icon: 'fa-person-running' },
+        { href: '/nutrition', label: 'Nutrition',    icon: 'fa-apple-whole' },
+        { href: '/coaching',  label: 'Coaching Hub', icon: 'fa-people-group' }
+        ];
+        const base = 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium';
+        const on   = 'bg-violet-100 text-violet-900';
+        const off  = 'text-gray-700 hover:bg-gray-100 hover:text-gray-900';
+         %>
+
+        <aside class="fixed bottom-0 left-0 top-16 z-30 flex w-56 -translate-x-full flex-col overflow-y-auto border-r border-gray-200 bg-white p-4 transition-transform peer-checked:translate-x-0 lg:translate-x-0">
+
+        <!-- Welcome mobile -->
+        <p class="mb-4 border-b border-gray-200 px-2 pb-4 text-sm text-gray-500 lg:hidden">
+            Welcome, <span class="font-semibold text-gray-900"><%= name %></span>
+        </p>
+
+        <nav aria-label="Main" class="flex flex-col gap-1">
+            <% items.forEach(function(item) { %>
+            <% var active = (typeof currentPath !== 'undefined') && currentPath === item.href; %>
+            <a href="<%= item.href %>" class="<%= base %> <%= active ? on : off %>"<% if (active) { %> aria-current="page"<% } %>>
+                <span class="fa-solid <%= item.icon %> w-5 text-center"></span>
+                <%= item.label %>
+            </a>
+            <% }) %>
+        </nav>
+
+        <!-- Logout mobile -->
+        <a href="/logout" class="mt-auto flex items-center gap-3 rounded-lg border-t border-gray-200 px-3 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 lg:hidden">
+            <span class="fa-solid fa-right-from-bracket w-5 text-center"></span>
+            Logout
+        </a>
+    </aside>
+    </body>
+</html>
