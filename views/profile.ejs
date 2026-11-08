@@ -4,202 +4,245 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile Athlete</title>
- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <link rel="stylesheet" href="profile.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900">
+  <% const displayName = user.name || (user.local && user.local.email) || 'Athlete'; %>
+
+  <!-- 1. Everything below is a direct child of <body> so the checkbox "peer" works.
+  The checkbox MUST come first. There is only ONE of it. -->
   <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
+
+  <!-- 2. Top bar -->
   <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4">
     <div class="flex items-center gap-3">
+      <!-- Hamburger mobile only -->
       <label for="sidebar-toggle" class="cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100 lg:hidden" aria-label="Open menu">
-        <span class="fa-solid fa-bars"></span>
-      </label>
-      <a href="/" class="logo-title items-center">
-       <img class="img-logo h-16 w-auto" src="img/liftflow.png" alt="litflow logo">                    
-      </a>
-    </div>
-
-    <div class="hidden items-center gap-4 lg:flex">
-      <span class="text-sm text-gray-500">Welcome! <span class="font-semibold text-gray-900"><%= user.name %></span></span>
-      <a href="/logout" class="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Logout</a>
-    </div>
-     <!--mobile-->
-      <input type="checkbox" id="menu-toggle" class="peer sr-only">
-      <label for="menu-toggle" class="lg:hidden cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500" aria-label="Toggle menu">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </label>
+      <a href="/" class="logo-title items-center">
+          <img class="img-logo h-16 w-auto" src="img/liftflow.png" alt="litflow logo">                    
+       </a>
+    </div>
 
-      <!-- Menú móvil: se muestra cuando el checkbox está marcado -->
-      <div class="hidden peer-checked:flex md:hidden absolute left-0 right-0 top-full flex-col border-t border-gray-200 bg-white p-2 shadow-md">
-        <h2>Welcome!<strong><%= user.name %></strong></h2>
-        <a href="/profile" class="block rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100">Profile</a>
-      </div>
+    <!-- Welcome + Logout desktop only shows on mobile they live inside the sidebar -->
+    <div class="hidden items-center gap-4 lg:flex">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-gray-500" aria-hidden="true">
+        <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+      </svg>
+      <span class="text-sm text-gray-500">Welcome! <span class="font-semibold text-gray-900"><%= displayName %></span></span>
+      <a href="/logout" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-red-100 hover:text-gray-900">
+        Logout
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" class="size-6" aria-hidden="true">
+          <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
   </header>
-  <main class="container">  
-    <div class="min-h-screen lg:flex">
-      <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
 
-       <%- include('sidebar', { name: user.name }) %>
+  <!-- 3. Sidebar Welcome + links + Logout at the bottom on mobile -->
+  <%- include('sidebar', { name: displayName }) %>
 
-      <!-- Fondo oscuro: toca para cerrar (solo móvil) -->
-     <label for="sidebar-toggle" class="fixed inset-x-0 bottom-0 top-16 z-20 hidden bg-black/40 peer-checked:block lg:hidden"></label>
+  <!-- 4. Dark overlay mobile only: tap to close -->
+  <label for="sidebar-toggle" class="fixed inset-x-0 bottom-0 top-16 z-20 hidden bg-black/40 peer-checked:block lg:hidden"></label>
 
-      <div class="flex-1">
-        <!-- Barra superior móvil -->
-        <div class="flex items-center border-b border-gray-200 p-3 lg:hidden">
-          <label for="sidebar-toggle" class="cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100" aria-label="Open menu">
-            <span class="fa-solid fa-bars"></span>
-          </label>
-        </div>
-
-        <main class="p-6">
-          <!-- contenido de la página -->
-        </main>
-      </div>
-    </div>
+  <!-- 5. Page content. lg:ml-64 = sidebar width change both if you change one -->
+  <main class="min-w-0 p-4 lg:ml-64 lg:p-8">
     
-   <section class="container-principal"> 
+    <!-- ========== TABS ========== -->
+    <section class="rounded-2xl border border-gray-200 bg-white shadow-sm">
 
-    <nav class="border-b border-gray-200 bg-white">
-  <div class="mx-auto flex max-w-6xl items-center gap-1 px-4">
-    <!-- Pestaña activa (sin desplegable) -->
-    <a href="/guides" aria-current="page"
-       class="-mb-px flex items-center gap-2 border-b-2 border-violet-900 px-3 py-3 text-sm font-semibold text-gray-900">
-      <span class="fa-regular fa-file-lines"></span> Guides
-    </a>
-
-    <!-- Pestaña con desplegable -->
-    <div class="group relative">
-      <button type="button"
-              class="-mb-px flex items-center gap-2 border-b-2 border-transparent px-3 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 group-hover:text-gray-900 group-focus-within:text-gray-900">
-        <span class="fa-solid fa-wrench"></span>
-        Libraries and tools
-        <span class="fa-solid fa-chevron-down text-xs text-gray-400 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"></span>
-      </button>
-
-      <!-- Menú: aparece con hover o con foco de teclado -->
-      <div class="invisible absolute left-0 top-full z-20 w-56 pt-1 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-        <div class="rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
-          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">API clients</a>
-          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">CLI</a>
-          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Wizard</a>
-          <a href="#" class="block rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Crawler</a>
+      <!-- Tab buttons -->
+      <div class="overflow-x-auto border-b border-gray-200">
+        <div class="flex min-w-max gap-1 px-2" role="tablist" aria-label="Athlete profile sections">
+          <button type="button" role="tab" id="tab-account" data-tab="account" aria-controls="panel-account" aria-selected="true"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Account and Profile
+          </button>
+          <button type="button" role="tab" id="tab-discipline" data-tab="discipline" aria-controls="panel-discipline" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Discipline and Experience
+          </button>
+          <button type="button" role="tab" id="tab-goals" data-tab="goals" aria-controls="panel-goals" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Goals
+          </button>
+          <button type="button" role="tab" id="tab-availability" data-tab="availability" aria-controls="panel-availability" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Availability and environment
+          </button>
+          <button type="button" role="tab" id="tab-starting-point" data-tab="starting-point" aria-controls="panel-starting-point" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Starting point
+          </button>
+          <button type="button" role="tab" id="tab-nutrition" data-tab="nutrition" aria-controls="panel-nutrition" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Nutrition
+          </button>
         </div>
       </div>
-    </div>
 
-    <!-- Otra pestaña con desplegable: copia el bloque anterior -->
-    <a href="/api" class="-mb-px flex items-center gap-2 border-b-2 border-transparent px-3 py-3 text-sm font-medium text-gray-700 hover:text-gray-900">
-      <span class="fa-solid fa-code"></span> API reference
-    </a>
-  </div>
-</nav>
-      <!-- ========== TABS (horizontal nav) ========== -->
-      <nav class="border-b border-gray-200 bg-white">
-        <ul class="mx-auto flex max-w-6xl items-center gap-1 px-4" id="pills-tab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="tab-account" data-bs-toggle="tab" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account and Profile</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-discipline" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Discipline and Experience</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-goals" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Goals</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-availability-environment" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Availability and environment</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-starting-point" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Starting point</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tab-nutrition" data-bs-toggle="tab" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Nutrition</button>
-          </li>
-        </ul>
+      <!-- Tab panels (one per tab, only the selected one is visible) -->
+      <div class="p-6">
 
-        <div class="tab-content" id="pills-tabContent">
+        <!-- ACCOUNT -->
+        <div role="tabpanel" id="panel-account" data-panel="account" aria-labelledby="tab-account" tabindex="0">
+          <h3 class="text-xl font-semibold">Let's get started</h3>
 
-          <!-- HOME: welcome + form side by side -->
-          <div class="tab-pane show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <div class="welcome-layout">
-              <!-- Form (information this one for height / weight) -->
-              <div class="tab-pane show active" id="pane-account" role="tabpanel" aria-labelledby="tab-account" tabindex="0">
-                <h3>Let's get started</h3>
-                <% if (user.local.email) { %>
-                 <form class="formulario" data-section="account">
-                    <input type="text" value="<%= user.local.email %>" disabled class="input-menu">
-
-                    <label for="role">How are you going to use LiftFlow?</label>
-                    <select name="role" id="role" class="input-menu" required>
-                      <option value="">Please choose an option</option>
-                      <option value="Athlete">Athlete</option>
-                      <option value="Coach">Coach</option>
-                      <option value="Both">Both</option>
-                    </select>
-                    <small class="field-error" data-error-for="role"></small>
-
-                    <label for="language">Language</label>
-                    <select name="language" id="language" class="input-menu" required>
-                      <option value="">Please choose an option</option>
-                      <option value="English">English</option>
-                      <option value="Spanish">Spanish</option>
-                    </select>
-                    <small class="field-error" data-error-for="language"></small>
-
-                    <label for="unitSystem">Unit System</label>
-                    <select name="unitSystem" id="unitSystem" class="input-menu" required>
-                      <option value="">Please choose an option</option>
-                      <option value="Metric">Metric</option>
-                      <option value="Imperial">Imperial</option>
-                    </select>
-                    <small class="field-error" data-error-for="unitSystem"></small>
-
-                    <button type="submit" class="btn-primary">Save and continue</button>
-                  </form>
-                <% } %>
+          <% if (user.local && user.local.email) { %>
+            <form id="account-form" class="mt-4 flex max-w-md flex-col gap-4" novalidate>
+              <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input type="text" value="<%= user.local.email %>" disabled
+                  class="w-full rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-gray-500">
               </div>
 
-            </div>
-          </div>
+              <div>
+                <label for="role" class="mb-1 block text-sm font-medium text-gray-700">How are you going to use LiftFlow?</label>
+                <select name="role" id="role" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Athlete">Athlete</option>
+                  <option value="Coach">Coach</option>
+                  <option value="Both">Both</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="role"></small>
+              </div>
 
-          <!-- PROFILE -->
-          <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-            <p>This is some placeholder content the <strong>Profile tab’s</strong> associated content.</p>
-          </div>
+              <div>
+                <label for="language" class="mb-1 block text-sm font-medium text-gray-700">Language</label>
+                <select name="language" id="language" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="language"></small>
+              </div>
 
-          <!-- CONTACT -->
-          <div class="tab-pane" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-            <p>This is some placeholder content the <strong>Contact tab’s</strong> associated content.</p>
-          </div>
+              <div>
+                <label for="unitSystem" class="mb-1 block text-sm font-medium text-gray-700">Unit System</label>
+                <select name="unitSystem" id="unitSystem" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Metric">Metric</option>
+                  <option value="Imperial">Imperial</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="unitSystem"></small>
+              </div>
 
+              <button type="submit"
+                class="w-full rounded-lg bg-violet-900 px-4 py-2 font-medium text-white hover:bg-violet-950 disabled:opacity-60">
+                Save and continue
+              </button>
+            </form>
+          <% } %>
         </div>
-      </nav>
 
-      <!-- ========== MENU TABLE ========== -->
-      <section class="table-wrapper">
-        <table>
-          <tr class="table-headings">
-            <th>Category</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-            <tr class="table-body">
-              <td colspan="5">There is no info right now =(</td>
-            </tr>
-          
-        </table>
-      </section>
+        <!-- DISCIPLINE -->
+        <div role="tabpanel" id="panel-discipline" data-panel="discipline" aria-labelledby="tab-discipline" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Discipline and Experience</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
 
-      
-    <section>
+        <!-- GOALS -->
+        <div role="tabpanel" id="panel-goals" data-panel="goals" aria-labelledby="tab-goals" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Goals</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div role="tabpanel" id="panel-availability" data-panel="availability" aria-labelledby="tab-availability" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Availability and environment</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- STARTING POINT -->
+        <div role="tabpanel" id="panel-starting-point" data-panel="starting-point" aria-labelledby="tab-starting-point" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Starting point</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- NUTRITION -->
+        <div role="tabpanel" id="panel-nutrition" data-panel="nutrition" aria-labelledby="tab-nutrition" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Nutrition</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+      </div>
+    </section>
   </main>
 
-  <!-- ========== SCRIPTS ========== -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
-  <script src="main.js"></script>
+  <!-- ========== SCRIPT: tabs + account form ========== -->
+  <script>
+    // ----- Tabs -----
+    const tabs   = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+    function showTab(id, focus) {
+      tabs.forEach(function (tab) {
+        const on = tab.dataset.tab === id;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+        if (on && focus) tab.focus();
+      });
+      panels.forEach(function (panel) {
+        panel.hidden = panel.dataset.panel !== id;
+      });
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { showTab(tab.dataset.tab); });
+
+      // Arrow keys move between tabs (keyboard accessibility)
+      tab.addEventListener('keydown', function (e) {
+        let next = null;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (next) { e.preventDefault(); showTab(next.dataset.tab, true); }
+      });
+    });
+
+    // ----- Account form -> POST /athlete/account -----
+    const form = document.getElementById('account-form');
+    if (form) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        form.querySelectorAll('[data-error-for]').forEach(function (el) { el.textContent = ''; });
+
+        const button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+
+        try {
+          const res  = await fetch('/athlete/account', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(form)))
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            if (data.errors) {
+              Object.entries(data.errors).forEach(function ([field, msg]) {
+                const el = form.querySelector('[data-error-for="' + field + '"]');
+                if (el) el.textContent = msg;
+              });
+            } else {
+              alert(data.error || 'Something went wrong');
+            }
+            return;
+          }
+
+          showTab(data.next); // server answers { ok: true, next: 'discipline' }
+        } catch (err) {
+          alert('Could not reach the server');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    }
+  </script>
 </body>
 </html>

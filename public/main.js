@@ -1,6 +1,5 @@
 
-app.use((req, res, next) => { res.locals.currentPath = req.path; next(); });
-console.log('main.js loaded');
+
 document.addEventListener('submit', async (e) => {
   const form = e.target.closest('form[data-section]');
   if (!form) {return; }                // ignora otros formularios

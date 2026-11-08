@@ -1,5 +1,5 @@
 
-module.exports = function(app, passport, db, ObjectID) {
+module.exports = function(app, passport, db) {
   const Athlete = require('./models/athlete');
   // normal routes ===============================================================
 
@@ -9,28 +9,21 @@ module.exports = function(app, passport, db, ObjectID) {
   });
 
   // PROFILE SECTION =========================
-  app.get('/profile', isLoggedIn, async function(req, res) {
+  app.get('/profile', isLoggedIn, async (req, res) => {
     try {
-      //const menu = await Menu.find();
-      db.collection('messages').find().toArray((err, result) => {
-        if (err) {return console.log(err);}
-        res.render('profile.ejs', {
-          user: req.user,
-          messages: result,
-          //menu
-        });
-      });
+      const messages = await db.collection('messages').find().toArray();
+      res.render('profile.ejs', {user: req.user, messages});
     } catch (err) {
       res.status(500).send(err.message);
     }
   });
 
   // LOGOUT ==============================
-  app.get('/logout', function(req, res) {
-    req.logout(() => {
-      console.log('User has logged out!');
+  app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+      if (err){return next(err);} 
+      res.redirect('/');
     });
-    res.redirect('/');
   });
 
   // Agregamos al atleta la cong de cuenta ===============================================================
@@ -100,13 +93,16 @@ module.exports = function(app, passport, db, ObjectID) {
   // user account will stay active in case they want to reconnect in the future
 
   // local -----------------------------------
-  app.get('/unlink/local', isLoggedIn, function(req, res) {
-    const user            = req.user;
-    user.local.email    = undefined;
-    user.local.password = undefined;
-    user.save(function() {
-      res.redirect('/profile');
-    });
+  app.get('/unlink/local', isLoggedIn, async (req, res) => {
+    try{
+        const user            = req.user;
+        user.local.email    = undefined;
+        user.local.password = undefined;
+        await user.save();
+        res.redirect('/profile');
+    }catch(err){
+        res.status(500).send(err.message);
+    }
   });
 
 };
