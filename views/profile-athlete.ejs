@@ -1,0 +1,127 @@
+<%- include('partials/sidebar-athlete.ejs') -%>
+ <main class="min-w-0 p-4 lg:ml-64 lg:p-8">
+    <!-- ========== TABS ========== -->
+    <section class="mx-auto w-full max-w-3xl">
+
+      <!-- Tab buttons -->
+      <div class="border-b border-gray-200">
+        <div class="flex min-w-max gap-1 px-2" role="tablist" aria-label="Athlete profile sections">
+          <button type="button" role="tab" id="tab-account" data-tab="account" aria-controls="panel-account" aria-selected="true"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Account and Profile
+          </button>
+          <button type="button" role="tab" id="tab-discipline" data-tab="discipline" aria-controls="panel-discipline" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Discipline and Experience
+          </button>
+          <button type="button" role="tab" id="tab-goals" data-tab="goals" aria-controls="panel-goals" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Goals
+          </button>
+          <button type="button" role="tab" id="tab-availability" data-tab="availability" aria-controls="panel-availability" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Availability and environment
+          </button>
+          <button type="button" role="tab" id="tab-starting-point" data-tab="starting-point" aria-controls="panel-starting-point" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Starting point
+          </button>
+          <button type="button" role="tab" id="tab-nutrition" data-tab="nutrition" aria-controls="panel-nutrition" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            Nutrition
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab panels (one per tab, only the selected one is visible) -->
+      <div class="px-auto">
+        <!-- ACCOUNT -->
+        <div role="tabpanel" id="panel-account" data-panel="account" aria-labelledby="tab-account" tabindex="0">
+          <h3 class="text-xl font-semibold">Let's get started athlete</h3>
+          <div class="row mt-5">
+           <div class="col-6"> 
+
+
+          <% if (user.local && user.local.email) { %>
+            <form id="account-form" class="mt-4 flex max-w-md flex-col gap-4" novalidate>
+              <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input type="text" value="<%= user.local.email %>" disabled
+                  class="w-full rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-gray-500">
+              </div>
+
+              <div>
+                <label for="role" class="mb-1 block text-sm font-medium text-gray-700">How are you going to use LiftFlow?</label>
+                <select name="role" id="role" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Athlete">Athlete</option>
+                  <option value="Coach">Coach</option>
+                  <option value="Both">Both</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="role"></small>
+              </div>
+
+              <div>
+                <label for="language" class="mb-1 block text-sm font-medium text-gray-700">Language</label>
+                <select name="language" id="language" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="language"></small>
+              </div>
+
+              <div>
+                <label for="unitSystem" class="mb-1 block text-sm font-medium text-gray-700">Unit System</label>
+                <select name="unitSystem" id="unitSystem" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Metric">Metric</option>
+                  <option value="Imperial">Imperial</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="unitSystem"></small>
+              </div>
+
+              <button type="submit"
+                class="w-full rounded-lg bg-violet-900 px-4 py-2 font-medium text-white hover:bg-violet-950 disabled:opacity-60">
+                Save and continue
+              </button>
+            </form>
+          <% } %>
+        </div>
+
+        <!-- DISCIPLINE -->
+        <div role="tabpanel" id="panel-discipline" data-panel="discipline" aria-labelledby="tab-discipline" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Discipline and Experience</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- GOALS -->
+        <div role="tabpanel" id="panel-goals" data-panel="goals" aria-labelledby="tab-goals" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Goals</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- AVAILABILITY -->
+        <div role="tabpanel" id="panel-availability" data-panel="availability" aria-labelledby="tab-availability" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Availability and environment</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- STARTING POINT -->
+        <div role="tabpanel" id="panel-starting-point" data-panel="starting-point" aria-labelledby="tab-starting-point" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Starting point</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+        <!-- NUTRITION -->
+        <div role="tabpanel" id="panel-nutrition" data-panel="nutrition" aria-labelledby="tab-nutrition" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Nutrition</h3>
+          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>

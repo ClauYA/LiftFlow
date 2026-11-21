@@ -1,0 +1,32 @@
+body{
+  word-wrap:break-word;
+}
+
+main{
+  box-sizing: border-box;
+  padding: 60px 80px 52px 80px;
+  align-items: center;
+  gap: 72px;
+  background: var(--neutral-100);
+}
+.container-login-pic{
+  background-image: url('../imgs/login.jpg');
+  /*background-image: url('img/signup-athlete.jpg');*/
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 24px;
+  height: 100%;
+}
+/* ==========================================
+      SIGN UP ATHLETE
+     ========================================== */
+
+.container-panel{
+  background-image: url('../imgs/signup-athlete.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 24px;
+  height: 100%;
+}  

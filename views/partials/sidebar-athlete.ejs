@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile Athlete</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../css/profile.css">
+    </head>
+
+    <body>  
+        <% const displayName = user.userName|| (user.local && user.local.email) || 'Athlete'; %>
+
+        <!-- 1. Everything below is a direct child of <body> so the checkbox "peer" works.
+        The checkbox MUST come first. There is only ONE of it. -->
+        <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
+
+        <!-- 2. Top bar -->
+        <header class="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4">
+            <div class="flex items-center gap-3">
+            <!-- Hamburger mobile only -->
+            <label for="sidebar-toggle" class="cursor-pointer rounded-lg p-2 text-gray-700 hover:bg-gray-100 lg:hidden" aria-label="Open menu">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </label>
+            <a href="/" class="logo-title items-center">
+                <img class="img-logo h-16 w-auto" src="imgs/liftflow.png" alt="litflow logo">                    
+            </a>
+            </div>
+
+            <!-- Welcome + Logout desktop only shows on mobile they live inside the sidebar -->
+            <div class="hidden items-center gap-4 lg:flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-gray-500" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-sm text-gray-500">Welcome! <span class="font-semibold text-gray-900"> <%= user.role %> <%= displayName %></span></span>
+            <a href="/logout" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-red-100 hover:text-gray-900">
+                Logout
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" class="size-6" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            </div>
+        </header>
+        <%
+        const items = [
+        { href: '/dashboard', label: 'Dashboard',    icon: 'fa-gauge' },
+        { href: '/workouts',  label: 'Workouts',     icon: 'fa-dumbbell' },
+        { href: '/plans',     label: 'Plans',        icon: 'fa-clipboard-list' },
+        { href: '/progress',  label: 'Progress',     icon: 'fa-chart-line' },
+        { href: '/exercises', label: 'Exercises',    icon: 'fa-person-running' },
+        { href: '/nutrition', label: 'Nutrition',    icon: 'fa-apple-whole' },
+        { href: '/coaching',  label: 'Coaching Hub', icon: 'fa-people-group' }
+        ];
+        const base = 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium';
+        const on   = 'bg-red-100 text-red-900';
+        const off  = 'text-gray-700 hover:bg-red-100 hover:text-gray-900';
+         %>
+
+        <aside class="fixed bottom-0 left-0 top-16 z-30 flex w-82 -translate-x-full flex-col overflow-y-auto border-r border-gray-200 bg-white p-4 transition-transform peer-checked:translate-x-0 lg:translate-x-0">
+
+        <!-- Welcome mobile -->
+        <p class="mb-4 border-b border-gray-200 px-2 pb-4 text-sm text-gray-500 lg:hidden">
+            Welcome   <span class="font-semibold text-gray-900"> <%= user.role %> <%= user.userName %></span>
+        </p>
+
+        <nav aria-label="Main" class="flex flex-col gap-1">
+            <% items.forEach(function(item) { %>
+            <% var active = (typeof currentPath !== 'undefined') && currentPath === item.href; %>
+            <a href="<%= item.href %>" class="<%= base %> <%= active ? on : off %>"<% if (active) { %> aria-current="page"<% } %>>
+                <span class="fa-solid <%= item.icon %> w-5 text-center"></span>
+                  <svg class="size-5 fill-current ...">
+                    <!-- ... -->
+                </svg>
+                <%= item.label %>
+            </a>
+            <% }) %>
+        </nav>
+
+        <!-- Logout mobile -->
+        <a href="/logout" class="mt-auto flex items-center gap-3 rounded-lg border-t border-gray-200 px-3 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm5.03 4.72a.75.75 0 0 1 0 1.06l-1.72 1.72h10.94a.75.75 0 0 1 0 1.5H10.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+            </svg>
+
+            Logout
+        </a>
+    </aside>
+    </body>
+</html>
