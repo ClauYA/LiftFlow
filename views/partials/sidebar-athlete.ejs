@@ -11,8 +11,7 @@
     <body>  
         <% const displayName = user.userName|| (user.local && user.local.email) || 'Athlete'; %>
 
-        <!-- 1. Everything below is a direct child of <body> so the checkbox "peer" works.
-        The checkbox MUST come first. There is only ONE of it. -->
+        <!-- 1. Everything below is a direct child of <body> -->
         <input type="checkbox" id="sidebar-toggle" class="peer sr-only">
 
         <!-- 2. Top bar -->
@@ -71,7 +70,6 @@
             <a href="<%= item.href %>" class="<%= base %> <%= active ? on : off %>"<% if (active) { %> aria-current="page"<% } %>>
                 <span class="fa-solid <%= item.icon %> w-5 text-center"></span>
                   <svg class="size-5 fill-current ...">
-                    <!-- ... -->
                 </svg>
                 <%= item.label %>
             </a>

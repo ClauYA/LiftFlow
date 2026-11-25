@@ -4,56 +4,126 @@
     <section class="mx-auto w-full max-w-3xl">
 
       <!-- Tab buttons -->
-      <div class="border-b border-gray-200">
-        <div class="flex min-w-max gap-1 px-2" role="tablist" aria-label="Athlete profile sections">
-          <button type="button" role="tab" id="tab-account" data-tab="account" aria-controls="panel-account" aria-selected="true"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+    <section class="w-full min-w-max gap-1 border-b border-gray-200">
+      <section class="w-full rounded-lg border border-gray-200 flex min-w-max gap-1 px-2" role="tablist" aria-label="Athlete profile sections">
+          <button type="button" role="tab" id="tab-account" data-tab="account" aria-controls="panel-account" aria-selected="true" data-step="1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <span class="stepper-onboarding flex h-6 w-6 items-center justify-center rounded-full border border-current text-xs px-2">1</span>
             Account and Profile
           </button>
           <button type="button" role="tab" id="tab-discipline" data-tab="discipline" aria-controls="panel-discipline" aria-selected="false" tabindex="-1"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
-            Discipline and Experience
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="2">2</h3>
+            Training background
           </button>
           <button type="button" role="tab" id="tab-goals" data-tab="goals" aria-controls="panel-goals" aria-selected="false" tabindex="-1"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
-            Goals
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="3">3</h3>
+            Your Goals
           </button>
           <button type="button" role="tab" id="tab-availability" data-tab="availability" aria-controls="panel-availability" aria-selected="false" tabindex="-1"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
-            Availability and environment
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="4">4</h3>
+            You routine
           </button>
           <button type="button" role="tab" id="tab-starting-point" data-tab="starting-point" aria-controls="panel-starting-point" aria-selected="false" tabindex="-1"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="5">5</h3>
             Starting point
           </button>
           <button type="button" role="tab" id="tab-nutrition" data-tab="nutrition" aria-controls="panel-nutrition" aria-selected="false" tabindex="-1"
-            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-violet-900 aria-selected:text-violet-900">
-            Nutrition
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="6">6</h3>
+            Your nutrition
           </button>
-        </div>
-      </div>
+          <button type="button" role="tab" id="tab-nutrition" data-tab="nutrition" aria-controls="panel-nutrition" aria-selected="false" tabindex="-1"
+            class="-mb-px whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 aria-selected:border-red-900 aria-selected:text-red-900">
+            <h3 class="stepper-onboarding" value="7">7</h3>
+            Review & create
+          </button>
+        </section>
+        <section class="flex justify-between">
+          <section class="px-4 py-3">
+           <h3 class="font-bold uppercase">
+            Step <span id="step-current">1</span> of <span id="step-total">7</span>
+            - <span id="step-title">Your profile</span>
+          </h3>
+          <p>A few details help us build a plan around you.</p>
+        </section>
+        <section class="px-4 py-3">
+          <button type="submit"
+            class="w-full rounded-lg bg-red-900 px-4 py-2 font-medium text-white hover:bg-red-950 disabled:opacity-60">
+            Save & exit
+          </button>
+        </section>
+      </section>
 
-      <!-- Tab panels (one per tab, only the selected one is visible) -->
-      <div class="px-auto">
-        <!-- ACCOUNT -->
-        <div role="tabpanel" id="panel-account" data-panel="account" aria-labelledby="tab-account" tabindex="0">
-          <h3 class="text-xl font-semibold">Let's get started athlete</h3>
-          <div class="row mt-5">
-           <div class="col-6"> 
-
-
-          <% if (user.local && user.local.email) { %>
-            <form id="account-form" class="mt-4 flex max-w-md flex-col gap-4" novalidate>
+      <!-- Tab panels shows one per tab -->
+      <section class="py-6">
+        <!-- Account and Profile -->
+        <section role="tabpanel" id="panel-account" data-panel="account" aria-labelledby="tab-account" tabindex="0">
+          <h3 class="text-xl font-semibold">Let's get started athlete <%= user.userName %></h3>
+            <form id="account-form" class="mt-4 flex max-w-md flex-col gap-4" data-section="account" novalidate>
               <div>
                 <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
-                <input type="text" value="<%= user.local.email %>" disabled
+                <input type="text" value="<%= user.email %>" disabled
+                  class="w-full rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-gray-500">
+              </div>
+
+              <section>
+                <label for="language" class="mb-1 block text-sm font-medium text-gray-700">Language</label>
+                <select name="language" id="language" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="language"></small>
+              </section>
+              
+              <section>
+                <label for="role" class="mb-1 block text-sm font-medium text-gray-700">Are you working with a coach?</label>
+                <select name="role" id="role" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Athlete">Yes, I have a coach</option>
+                  <option value="Coach">No, I'm training on my own</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="role"></small>
+              </section>
+              <section>
+                <label for="unitSystem" class="mb-1 block text-sm font-medium text-gray-700">Unit System</label>
+                <select name="unitSystem" id="unitSystem" required
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
+                  <option value="">Please choose an option</option>
+                  <option value="Metric">Metric</option>
+                  <option value="Imperial">Imperial</option>
+                </select>
+                <small class="mt-1 block text-sm text-red-600" data-error-for="unitSystem"></small>
+              </section>
+              <section  class="w-full ">
+                <button type="submit"
+                  class="rounded-lg bg-red-900 px-4 py-2 font-medium text-white hover:bg-red-950 disabled:opacity-60">
+                  Continue
+                </button>
+              </section>
+            </form>
+        </section>
+
+        <!-- Discipline and Experience -->
+        <div role="tabpanel" id="panel-discipline" data-panel="discipline" aria-labelledby="tab-discipline" tabindex="0" hidden>
+          <h3 class="text-xl font-semibold">Discipline and Experience</h3>
+          <form id="account-form" class="mt-4 flex max-w-md flex-col gap-4" data-section="account" novalidate>
+              <div>
+                <label class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input type="text" value="<%= user.email %>" disabled
                   class="w-full rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-gray-500">
               </div>
 
               <div>
                 <label for="role" class="mb-1 block text-sm font-medium text-gray-700">How are you going to use LiftFlow?</label>
                 <select name="role" id="role" required
-                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
                   <option value="">Please choose an option</option>
                   <option value="Athlete">Athlete</option>
                   <option value="Coach">Coach</option>
@@ -65,7 +135,7 @@
               <div>
                 <label for="language" class="mb-1 block text-sm font-medium text-gray-700">Language</label>
                 <select name="language" id="language" required
-                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
                   <option value="">Please choose an option</option>
                   <option value="English">English</option>
                   <option value="Spanish">Spanish</option>
@@ -76,7 +146,7 @@
               <div>
                 <label for="unitSystem" class="mb-1 block text-sm font-medium text-gray-700">Unit System</label>
                 <select name="unitSystem" id="unitSystem" required
-                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-violet-900 focus:outline-none focus:ring-2 focus:ring-violet-900/30">
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-red-900 focus:outline-none focus:ring-2 focus:ring-red-900/30">
                   <option value="">Please choose an option</option>
                   <option value="Metric">Metric</option>
                   <option value="Imperial">Imperial</option>
@@ -89,39 +159,33 @@
                 Save and continue
               </button>
             </form>
-          <% } %>
-        </div>
-
-        <!-- DISCIPLINE -->
-        <div role="tabpanel" id="panel-discipline" data-panel="discipline" aria-labelledby="tab-discipline" tabindex="0" hidden>
-          <h3 class="text-xl font-semibold">Discipline and Experience</h3>
-          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
         </div>
 
         <!-- GOALS -->
         <div role="tabpanel" id="panel-goals" data-panel="goals" aria-labelledby="tab-goals" tabindex="0" hidden>
           <h3 class="text-xl font-semibold">Goals</h3>
-          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+          <p class="mt-2 text-gray-600">Falta...................</p>
         </div>
 
         <!-- AVAILABILITY -->
         <div role="tabpanel" id="panel-availability" data-panel="availability" aria-labelledby="tab-availability" tabindex="0" hidden>
           <h3 class="text-xl font-semibold">Availability and environment</h3>
-          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+          <p class="mt-2 text-gray-600">Falta...................</p>
         </div>
 
         <!-- STARTING POINT -->
         <div role="tabpanel" id="panel-starting-point" data-panel="starting-point" aria-labelledby="tab-starting-point" tabindex="0" hidden>
           <h3 class="text-xl font-semibold">Starting point</h3>
-          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+          <p class="mt-2 text-gray-600">Falta...................</p>
         </div>
 
         <!-- NUTRITION -->
         <div role="tabpanel" id="panel-nutrition" data-panel="nutrition" aria-labelledby="tab-nutrition" tabindex="0" hidden>
           <h3 class="text-xl font-semibold">Nutrition</h3>
-          <p class="mt-2 text-gray-600">Placeholder: form coming soon.</p>
+          <p class="mt-2 text-gray-600">Falta...................</p>
         </div>
 
-      </div>
+      </section>
     </section>
   </main>
+  <script src="/js/profile-tabs.js"></script>
